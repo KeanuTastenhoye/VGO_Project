@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,23 +41,23 @@ namespace PiCross
         /// </summary>
         /// <param name="symbol">Char to be converted to Square.</param>
         /// <returns>Square corresponding to value.</returns>
-        public static Square FromSymbol( char symbol )
+        public static Square FromSymbol(char symbol)
         {
-            if ( UNKNOWN.Symbol == symbol )
+            if (UNKNOWN.Symbol == symbol)
             {
                 return UNKNOWN;
             }
-            else if ( FILLED.Symbol == symbol )
+            else if (FILLED.Symbol == symbol)
             {
                 return FILLED;
             }
-            else if ( EMPTY.Symbol == symbol )
+            else if (EMPTY.Symbol == symbol)
             {
                 return EMPTY;
             }
             else
             {
-                throw new ArgumentException( $"Unknown symbol: {symbol}" );
+                throw new ArgumentException($"Unknown symbol: {symbol}");
             }
         }
 
@@ -65,7 +66,7 @@ namespace PiCross
         /// </summary>
         /// <param name="b">Bool.</param>
         /// <returns>Square.</returns>
-        public static Square FromBool( bool b )
+        public static Square FromBool(bool b)
         {
             return b ? FILLED : EMPTY;
         }
@@ -75,9 +76,9 @@ namespace PiCross
         /// </summary>
         /// <param name="rows">Strings representing rows.</param>
         /// <returns>Grid.</returns>
-        public static IGrid<Square> CreateGrid( params string[] rows )
+        public static IGrid<Square> CreateGrid(params string[] rows)
         {
-            return CreateGrid( Grid.CreateCharacterGrid( rows ) );
+            return CreateGrid(Grid.CreateCharacterGrid(rows));
         }
 
         /// <summary>
@@ -85,9 +86,9 @@ namespace PiCross
         /// </summary>
         /// <param name="grid">Grid of chars.</param>
         /// <returns>Grid of squares.</returns>
-        public static IGrid<Square> CreateGrid( IGrid<char> grid )
+        public static IGrid<Square> CreateGrid(IGrid<char> grid)
         {
-            return grid.Map( Square.FromSymbol );
+            return grid.Map(Square.FromSymbol);
         }
 
         private Square()
@@ -103,7 +104,7 @@ namespace PiCross
         /// </summary>
         /// <param name="that"></param>
         /// <returns></returns>
-        public abstract bool CompatibleWith( Square that );
+        public abstract bool CompatibleWith(Square that);
 
         /// <summary>
         /// Merges two Squares together.
@@ -113,7 +114,7 @@ namespace PiCross
         /// </summary>
         /// <param name="that">Square to merge with.</param>
         /// <returns>Merge result.</returns>
-        public abstract Square Merge( Square that );
+        public abstract Square Merge(Square that);
 
         /// <summary>
         /// Symbol for this square.
@@ -123,9 +124,9 @@ namespace PiCross
         /// </summary>
         public abstract char Symbol { get; }
 
-        public override bool Equals( object obj )
+        public override bool Equals(object obj)
         {
-            return object.ReferenceEquals( this, obj );
+            return object.ReferenceEquals(this, obj);
         }
 
         public override int GetHashCode()
@@ -151,23 +152,23 @@ namespace PiCross
         /// <exception cref="ArgumentException">
         /// Thrown when casting UNKNOWN to bool.
         /// </exception>
-        public static explicit operator bool( Square square )
+        public static explicit operator bool(Square square)
         {
-            if ( square == null )
+            if (square == null)
             {
-                throw new ArgumentNullException( nameof( square ) );
+                throw new ArgumentNullException(nameof(square));
             }
-            else if ( square == UNKNOWN )
+            else if (square == UNKNOWN)
             {
-                throw new ArgumentException( "Cannot convert UNKNOWN to bool" );
+                throw new ArgumentException("Cannot convert UNKNOWN to bool");
             }
-            else if ( square == EMPTY )
+            else if (square == EMPTY)
             {
                 return false;
             }
             else
             {
-                Debug.Assert( square == FILLED );
+                Debug.Assert(square == FILLED);
 
                 return true;
             }
@@ -175,12 +176,12 @@ namespace PiCross
 
         private class Unknown : Square
         {
-            public override bool CompatibleWith( Square that )
+            public override bool CompatibleWith(Square that)
             {
                 return true;
             }
 
-            public override Square Merge( Square that )
+            public override Square Merge(Square that)
             {
                 return UNKNOWN;
             }
@@ -190,14 +191,14 @@ namespace PiCross
 
         private class Filled : Square
         {
-            public override bool CompatibleWith( Square that )
+            public override bool CompatibleWith(Square that)
             {
                 return that != EMPTY;
             }
 
-            public override Square Merge( Square that )
+            public override Square Merge(Square that)
             {
-                if ( that == this )
+                if (that == this)
                 {
                     return this;
                 }
@@ -212,14 +213,14 @@ namespace PiCross
 
         private class Empty : Square
         {
-            public override bool CompatibleWith( Square that )
+            public override bool CompatibleWith(Square that)
             {
                 return that != FILLED;
             }
 
-            public override Square Merge( Square that )
+            public override Square Merge(Square that)
             {
-                if ( that == this )
+                if (that == this)
                 {
                     return this;
                 }
