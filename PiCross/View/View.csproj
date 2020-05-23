@@ -55,10 +55,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="SquareConverter.cs" />
+    <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Screens\GameScreen.xaml.cs">
+      <DependentUpon>GameScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Screens\HomeScreen.xaml.cs">
+      <DependentUpon>HomeScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\SquareConverter.cs" />
+    <Compile Include="Screens\PiCrossSelectorScreen.xaml.cs">
+      <DependentUpon>PiCrossSelectorScreen.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\PiCrossControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\GameScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +89,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Screens\HomeScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Screens\PiCrossSelectorScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -119,6 +141,16 @@
       <Project>{4108cc47-2812-42b6-beb8-d95486ba165f}</Project>
       <Name>ViewModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\meme.jpg" />
+    <Resource Include="Resources\PiCrosslogo.png" />
+    <Resource Include="Resources\SwimmingTheme.jpg" />
+    <Resource Include="Resources\VioletPixelRain.jpg" />
+    <Resource Include="Resources\BluePixelRain.jpg" />
+    <Content Include="Resources\ClickSound.wav" />
+    <Content Include="Resources\GameSound.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

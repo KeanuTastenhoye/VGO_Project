@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace View
+namespace View.Converters
 {
     public class SquareConverter : IValueConverter
     {
@@ -19,14 +19,17 @@ namespace View
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var square = (Square)value;
+
             if (square == Square.EMPTY )
             {
                 return Empty;
             }
+
             else if (square == Square.FILLED )
             {
                 return Filled;
             }
+
             else
             {
                 return Unknown;

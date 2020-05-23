@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="View.Screens.GameScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:View"
+             xmlns:controls="clr-namespace:View.Controls"
+             xmlns:converters="clr-namespace:View.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <!--Wannabe CSS-->
+    <UserControl.Resources>
+        <!--Kleur betekent status van vakjes-->
+        <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="squares"/>
+        <!--Kleur van de getallen-->
+        <converters:BoolConverter True="#32CD32" False="Red" x:Key="rowColState" />
+        <!--Bepaald of foto zichtbaar is, als opgelost is, visibility: visible,...-->
+        <converters:BoolConverter True="{x:Static Visibility.Visible}" False="{x:Static Visibility.Hidden}" x:Key="finishedNotification" />
+        <Style x:Key="logo" TargetType="{x:Type Image}">
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="Margin" Value="40"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="btn" TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Margin" Value="35"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="gridd" TargetType="{x:Type Label}">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Black"/>
+        </Style>
+        <Style x:Key="puzzelPlaats" TargetType="{x:Type StackPanel}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid>
+            <!--Bepaald hoeveel rijen en kolommen er zijn-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <!--Logo-->
+            <Image Source="pack://application:,,,/Resources/PiCrossLogo.png" Grid.Row="0" Grid.Column="1" Style="{StaticResource logo}"></Image>
+
+            <!--Knopjes-->
+            <!--Back-->
+            <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource btn}" Command="{Binding Home}" HorizontalAlignment="Right">Home
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <!--Quit-->
+            <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource btn}" Command="{Binding Quit}" HorizontalAlignment="Left">Forfait
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <!--Puzzel-->
+            <StackPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource puzzelPlaats}">
+            <controls:PiCrossControl Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid="{Binding grid.Value}" RowConstraints="{Binding GoedePuzzel.RowConstraints}" ColumnConstraints="{Binding GoedePuzzel.ColumnConstraints}" x:Name="PiCrossControl">
+                <!--Vierkantjes-->
+                <controls:PiCrossControl.SquareTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding State}" CommandParameter="{Binding Square}">
+                            <Button.Content>
+                                <Rectangle Width="20" Height="20" Stroke="Black" Fill="{Binding Contents.Value, Converter={StaticResource squares}}"/>
+                            </Button.Content>
+                        </Button>
+                    </DataTemplate>
+                </controls:PiCrossControl.SquareTemplate>
+                <!--Rijen-->
+                <controls:PiCrossControl.RowConstraintsTemplate>
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding Values}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Style="{StaticResource gridd}" Content="{Binding Value}" Background="{Binding IsSatisfied.Value, Converter={StaticResource rowColState}}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </controls:PiCrossControl.RowConstraintsTemplate>
+                <!--Kolommen-->
+                <controls:PiCrossControl.ColumnConstraintsTemplate>
+                    <DataTemplate>
+                        <ItemsControl ItemsSource="{Binding Values}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Style="{StaticResource gridd}" Content="{Binding Value}" Background="{Binding IsSatisfied.Value, Converter={StaticResource rowColState}}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </DataTemplate>
+                </controls:PiCrossControl.ColumnConstraintsTemplate>
+            </controls:PiCrossControl>
+            </StackPanel>
+            <!--Als je wint zie je dit-->
+            <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="20" Visibility="{Binding IsSolved.Value, Converter={StaticResource finishedNotification}}">
+                <Border.Background>
+                    <SolidColorBrush Color="white" Opacity=".75" />
+                </Border.Background>
+                <StackPanel>
+                    <Image Source="pack://application:,,,/Resources/meme.jpg" Grid.Row="1" Grid.Column="1"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </StackPanel>
+</UserControl>

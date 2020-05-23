@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="View.Screens.HomeScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <!--Wannabe CSS-->
+    <UserControl.Resources>
+        <Style x:Key="logo" TargetType="{x:Type Image}">
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="Margin" Value="40"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="btn" TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="Margin" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid>
+            <!--Bepaald hoeveel rijen en kolommen er zijn-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <!--Logo-->
+            <Image Source="pack://application:,,,/Resources/PiCrossLogo.png" Grid.Column="1" Grid.Row="0" Style="{StaticResource logo}"></Image>
+
+            <!--Knopjes-->
+            <!--Start-->
+            <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource btn}" Command="{Binding Start}">Let the games begin
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <!--Choose-->
+            <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource btn}" Command="{Binding GoToLevelSelect}">Choose your level
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <!--Quit-->
+            <Button Grid.Column="1" Grid.Row="3" Style="{StaticResource btn}" Command="{Binding Quit}">Forfait
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <!--Quit-->
+            <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource btn}" Command="{Binding Theme}">Sick of this layout?
+                 <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+    </StackPanel>
+</UserControl>

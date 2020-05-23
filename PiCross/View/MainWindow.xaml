@@ -4,40 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:View.Controls"
+        xmlns:converters="clr-namespace:View.Converters"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <controls:PiCrossControl x:Name="picrossControl">
-            <controls:PiCrossControl.SquareTemplate>
-                <DataTemplate>
-                    <Rectangle Width="32" Height="32" Stroke="Black">
-                        <Rectangle.Fill>
-                            <Binding Path="Contents.Value">
-                                <Binding.Converter>
-                                    <local:SquareConverter Empty="White" Filled="Black" Unknown="Gray" />
-                                </Binding.Converter>
-                            </Binding>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </DataTemplate>
-            </controls:PiCrossControl.SquareTemplate>
-            <controls:PiCrossControl.RowConstraintsTemplate>
-                <DataTemplate>
-                    <ItemsControl ItemsSource="{Binding}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Width="32" Height="32" Text="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </DataTemplate>
-            </controls:PiCrossControl.RowConstraintsTemplate>
-        </controls:PiCrossControl>
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="496" Width="695">
+    <!--Begin Thema-->
+    <Window.Background>
+        <ImageBrush ImageSource="Resources/SwimmingTheme.jpg"/>
+    </Window.Background>
+
+    <Grid Width="auto" Height="auto">
+        <ContentControl Content="{Binding Active}" Margin="-2,0,2,0"/>
     </Grid>
 </Window>
