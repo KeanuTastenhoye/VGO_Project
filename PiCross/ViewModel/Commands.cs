@@ -49,26 +49,6 @@ namespace ViewModel
         }
     }
 
-    public class GoToThemeChangeCommand : ICommand
-    {
-        public event EventHandler CanExecuteChanged;
-        public MainViewModel mv;
-        private bool _execute;
-        public GoToThemeChangeCommand(MainViewModel mainViewModel)
-        {
-            mv = mainViewModel;
-            _execute = true;
-        }
-        public bool CanExecute(object param)
-        {
-            return _execute;
-        }
-        public void Execute(object param)
-        {
-            mv.GoToThemeChange();
-        }
-    }
-
 
     //Func commands
     public class QuitCommand : ICommand
@@ -134,7 +114,10 @@ namespace ViewModel
             {
                 square.Contents.Value = Square.EMPTY;
             }
-            else
+            else if (square.Contents.Value == Square.EMPTY)
+            {
+                square.Contents.Value = Square.UNKNOWN;
+            } else
             {
                 square.Contents.Value = Square.FILLED;
             }
@@ -159,6 +142,66 @@ namespace ViewModel
         {
             var picross = param as Puzzle;
             mv.Choose(picross);
+        }
+    }
+
+    public class ResetCommand : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+        public GameScreenViewModel gv;
+        private bool _execute;
+        public ResetCommand(GameScreenViewModel gameScreenViewModel)
+        {
+            gv = gameScreenViewModel;
+            _execute = true;
+        }
+        public bool CanExecute(object param)
+        {
+            return _execute;
+        }
+        public void Execute(object param)
+        {
+            gv.PuzzelMaken();
+        }
+    }
+
+    public class BigCommand : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+        public MainViewModel mv;
+        private bool _execute;
+        public BigCommand(MainViewModel mainViewModel)
+        {
+            mv = mainViewModel;
+            _execute = true;
+        }
+        public bool CanExecute(object param)
+        {
+            return _execute;
+        }
+        public void Execute(object param)
+        {
+            mv.Big() ;
+        }
+    }
+
+    public class SmallCommand : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+        public MainViewModel mv;
+        private bool _execute;
+        public SmallCommand(MainViewModel mainViewModel)
+        {
+            mv = mainViewModel;
+            _execute = true;
+        }
+        public bool CanExecute(object param)
+        {
+            return _execute;
+        }
+        public void Execute(object param)
+        {
+            mv.Small();
         }
     }
 }

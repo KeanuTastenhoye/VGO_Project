@@ -20,10 +20,10 @@ namespace ViewModel
                 return Square.Contents;
             }
         }
-
         public SquareViewModel(IPlayablePuzzleSquare square)
         {
             this.Square = square;
+            //Empty, filled of unknown
             this.State = new SquareStateCommand(this);
         }
     }

@@ -9,16 +9,21 @@
     <!--Wannabe CSS-->
     <UserControl.Resources>
         <Style x:Key="logo" TargetType="{x:Type Image}">
-            <Setter Property="Width" Value="125"/>
-            <Setter Property="Margin" Value="40"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="60"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
         <Style x:Key="btn" TargetType="{x:Type Button}">
-            <Setter Property="Height" Value="25"/>
+            <Setter Property="Height" Value="35"/>
             <Setter Property="Width" Value="150"/>
             <Setter Property="FontWeight" Value="Black"/>
-            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Margin" Value="25"/>
+        </Style>
+        <Style x:Key="animation" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontWeight" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </UserControl.Resources>
     <StackPanel>
@@ -40,9 +45,30 @@
             <!--Logo-->
             <Image Source="pack://application:,,,/Resources/PiCrossLogo.png" Grid.Column="1" Grid.Row="0" Style="{StaticResource logo}"></Image>
 
+            <!--Animation-->
+            <TextBlock x:Name="Text" Text="Welcome" Grid.Column="1" Grid.Row="1" Style="{StaticResource animation}">
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard Duration="00:00:01" RepeatBehavior="Forever" AutoReverse="True">
+                                    <DoubleAnimation From="10" To="30" Storyboard.TargetName="Text" Storyboard.TargetProperty="FontSize"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+            
             <!--Knopjes-->
             <!--Start-->
-            <Button Grid.Column="1" Grid.Row="1" Style="{StaticResource btn}" Command="{Binding Start}">Let the games begin
+            <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource btn}" Command="{Binding Start}">Let the games begin
                 <Button.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Color="Red" Offset="0"/>
@@ -50,8 +76,9 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+            
             <!--Choose-->
-            <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource btn}" Command="{Binding GoToLevelSelect}">Choose your level
+            <Button Grid.Column="1" Grid.Row="3" Style="{StaticResource btn}" Command="{Binding GoToLevelSelect}">Choose your level
                 <Button.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Color="Red" Offset="0"/>
@@ -59,18 +86,10 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+            
             <!--Quit-->
-            <Button Grid.Column="1" Grid.Row="3" Style="{StaticResource btn}" Command="{Binding Quit}">Forfait
+            <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource btn}" Command="{Binding Quit}">Forfait
                 <Button.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Color="Red" Offset="0"/>
-                        <GradientStop Color="Orange" Offset="1"/>
-                    </LinearGradientBrush>
-                </Button.Background>
-            </Button>
-            <!--Quit-->
-            <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource btn}" Command="{Binding Theme}">Sick of this layout?
-                 <Button.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Color="Red" Offset="0"/>
                         <GradientStop Color="Orange" Offset="1"/>

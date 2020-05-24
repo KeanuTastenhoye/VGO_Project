@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:View"
+             xmlns:local="clr-namespace:View.Screens"
              xmlns:controls="clr-namespace:View.Controls"
              xmlns:converters="clr-namespace:View.Converters"
              mc:Ignorable="d" 
@@ -14,17 +14,17 @@
         <converters:SquareConverter Empty="White" Filled="Black" Unknown="Gray" x:Key="squares"/>
         <!--Kleur van de getallen-->
         <converters:BoolConverter True="#32CD32" False="Red" x:Key="rowColState" />
-        <!--Bepaald of foto zichtbaar is, als opgelost is, visibility: visible,...-->
+        <!--Bepaald of foto zichtbaar is, als true is, visibility: visible,...-->
         <converters:BoolConverter True="{x:Static Visibility.Visible}" False="{x:Static Visibility.Hidden}" x:Key="finishedNotification" />
         <Style x:Key="logo" TargetType="{x:Type Image}">
-            <Setter Property="Width" Value="125"/>
-            <Setter Property="Margin" Value="40"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Margin" Value="60"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
         <Style x:Key="btn" TargetType="{x:Type Button}">
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="60"/>
             <Setter Property="FontWeight" Value="Black"/>
             <Setter Property="Margin" Value="35"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -51,6 +51,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             
             <!--Logo-->
@@ -66,6 +67,7 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+            
             <!--Quit-->
             <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource btn}" Command="{Binding Quit}" HorizontalAlignment="Left">Forfait
                 <Button.Background>
@@ -75,9 +77,10 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
+            
             <!--Puzzel-->
-            <StackPanel Grid.Row="1" Grid.Column="1" Style="{StaticResource puzzelPlaats}">
-            <controls:PiCrossControl Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid="{Binding grid.Value}" RowConstraints="{Binding GoedePuzzel.RowConstraints}" ColumnConstraints="{Binding GoedePuzzel.ColumnConstraints}" x:Name="PiCrossControl">
+            <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Style="{StaticResource puzzelPlaats}">
+            <controls:PiCrossControl Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid="{Binding grid.Value}" RowConstraints="{Binding GoedePuzzel.RowConstraints}" ColumnConstraints="{Binding GoedePuzzel.ColumnConstraints}" x:Name="PiCrossControl">
                 <!--Vierkantjes-->
                 <controls:PiCrossControl.SquareTemplate>
                     <DataTemplate>
@@ -124,6 +127,28 @@
                 </controls:PiCrossControl.ColumnConstraintsTemplate>
             </controls:PiCrossControl>
             </StackPanel>
+            
+            <!--Knopjes-->
+            <!--Reset-->
+            <Button Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Style="{StaticResource btn}" Command="{Binding Reset}">Reset
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            
+            <!--Fill
+            <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Style="{StaticResource btn}" Command="{Binding Fill}">Fill
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="Red" Offset="0"/>
+                        <GradientStop Color="Orange" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>-->
+
             <!--Als je wint zie je dit-->
             <Border Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Padding="20" Visibility="{Binding IsSolved.Value, Converter={StaticResource finishedNotification}}">
                 <Border.Background>

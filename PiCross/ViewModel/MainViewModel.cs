@@ -16,6 +16,7 @@ namespace ViewModel
         public Action Close { get; set; }
         public PiCrossFacade PiCrossFacade { get; }
 
+        //Launcht op de Home screen view
         public MainViewModel()
         {
             this.Active = new HomeScreenViewModel(this);
@@ -47,12 +48,6 @@ namespace ViewModel
             this.Active = new PiCrossSelectorScreenViewModel(this);
         }
 
-        //Go to theme change screen
-        public void GoToThemeChange()
-        {
-            //this.Active = new ThemeSelectorScreenViewModel(this);
-        }
-
         //Stop
         public void Quit()
         {
@@ -65,15 +60,22 @@ namespace ViewModel
             this.Active = new GameScreenViewModel(this);
         }
 
-        public void Start(Puzzle picross)
-        {
-            this.Active = new GameScreenViewModel(this, picross);
-        }
-
         //Choose the level to play (go to selector page)
         public void Choose(Puzzle picross)
         {
             this.Active = new GameScreenViewModel(this, picross);
+        }
+
+        //Keuze van puzzel
+        public void Big()
+        {
+            String keuze = "Big";
+            this.Active = new PiCrossSelectorScreenViewModel(this, keuze);
+        }
+        public void Small()
+        {
+            String keuze = "Small";
+            this.Active = new PiCrossSelectorScreenViewModel(this, keuze);
         }
     }
 }

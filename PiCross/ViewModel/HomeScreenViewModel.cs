@@ -9,16 +9,17 @@ namespace ViewModel
 {
     public class HomeScreenViewModel
     {
-        public MainViewModel mainViewModel { get; }
+        public MainViewModel mvm { get; }
         public ICommand Start { get; }
         public ICommand GoToLevelSelect { get; }
         public ICommand Quit { get; }
         public HomeScreenViewModel(MainViewModel mainViewModel)
         {
-            this.mainViewModel = mainViewModel;
-            this.Start = new StartCommand(this.mainViewModel);
-            this.GoToLevelSelect = new GoToLevelSelectCommand(this.mainViewModel);
-            this.Quit = new QuitCommand(this.mainViewModel);
+            this.mvm = mainViewModel;
+            //Nodige commands op HomeScreen
+            this.Start = new StartCommand(this.mvm);
+            this.GoToLevelSelect = new GoToLevelSelectCommand(this.mvm);
+            this.Quit = new QuitCommand(this.mvm);
         }
     }
 }

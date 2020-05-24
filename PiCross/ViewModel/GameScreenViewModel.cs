@@ -21,9 +21,11 @@ namespace ViewModel
         public IPlayablePuzzle GoedePuzzel { get; private set; }
         public ICommand Home { get; private set; }
         public ICommand Quit { get; private set; }
+        public ICommand Reset { get; private set; }
 
         //Basis puzzel voor als er geen puzzel is meegegeven
         public GameScreenViewModel(MainViewModel mainWindowViewModel) : this(mainWindowViewModel, Puzzle.FromRowStrings(
+
                     "xx...",
                     ".x...",
                     "..x..",
@@ -32,11 +34,6 @@ namespace ViewModel
              ))
         { }
 
-        private void IsSolved_ValueChanged()
-        {
-            this.IsSolved.Value = GoedePuzzel.IsSolved.Value;
-        }
-
         //Initialisatie & dooverwijzing naar het maken van een puzzel
         public GameScreenViewModel(MainViewModel m, Puzzle p)
         {
@@ -44,6 +41,7 @@ namespace ViewModel
             this.puzzle = p;
             this.Quit = new QuitCommand(this.mvm);
             this.Home = new HomeCommand(this.mvm);
+            this.Reset = new ResetCommand(this);
             //this.f = new PiCrossFacade();
             this.grid = Cell.Create<IGrid<SquareViewModel>>(null);
             this.IsSolved = Cell.Create(false);
@@ -55,12 +53,18 @@ namespace ViewModel
         //Puzzel genereren via de sub klassse in PiCrossFacade
         public void PuzzelMaken()
         {
-            var f = new PiCrossFacade();
-            GoedePuzzel = f.CreatePlayablePuzzle(puzzle);
-            GoedePuzzel.IsSolved.ValueChanged += IsSolved_ValueChanged;
+            var facade = new PiCrossFacade();
+            GoedePuzzel = facade.CreatePlayablePuzzle(puzzle);
+            GoedePuzzel.IsSolved.ValueChanged += IsSolved_Verandering;
 
             this.grid.Value = this.GoedePuzzel.Grid.Map(square => new SquareViewModel(square)).Copy();
-            IsSolved_ValueChanged();
+            IsSolved_Verandering();
+        }
+
+        //Steekt bool waarde in 'GoedePuzzel', deze waarde wordt opgevraagt in de View
+        private void IsSolved_Verandering()
+        {
+            this.IsSolved.Value = GoedePuzzel.IsSolved.Value;
         }
 
         /*

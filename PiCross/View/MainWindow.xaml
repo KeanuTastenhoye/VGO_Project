@@ -8,13 +8,28 @@
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="496" Width="695">
+        Title="MainWindow" Height="700" Width="1000">
     <!--Begin Thema-->
     <Window.Background>
         <ImageBrush ImageSource="Resources/SwimmingTheme.jpg"/>
     </Window.Background>
 
+    <!--Super cool klik soundje met helemaal geen vertraging hoor-->
     <Grid Width="auto" Height="auto">
-        <ContentControl Content="{Binding Active}" Margin="-2,0,2,0"/>
+        <!--
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Style.Triggers>
+                    <EventTrigger RoutedEvent="PreviewMouseDown">
+                        <SoundPlayerAction Source="Resources/ClickSound.wav"/>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="Loaded" >
+                        <SoundPlayerAction Source="Resources/GameSound.wav"/>
+                    </EventTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+         -->
+        <ContentControl Content="{Binding Active}"/>
     </Grid>
 </Window>
